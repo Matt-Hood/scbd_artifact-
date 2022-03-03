@@ -1,5 +1,4 @@
 <?php
-
 namespace enshrined\svgSanitize;
 
 use enshrined\svgSanitize\data\AllowedAttributes;
@@ -8,7 +7,6 @@ use enshrined\svgSanitize\data\AttributeInterface;
 use enshrined\svgSanitize\data\TagInterface;
 use enshrined\svgSanitize\data\XPath;
 use enshrined\svgSanitize\ElementReference\Resolver;
-use enshrined\svgSanitize\ElementReference\Subject;
 
 /**
  * Class Sanitizer
@@ -214,8 +212,6 @@ class Sanitizer
         $this->elementReferenceResolver->collect();
         $elementsToRemove = $this->elementReferenceResolver->getElementsToRemove();
 
-        // remove doctype after node elements have been analyzed
-        $this->removeDoctype();
         // Start the cleaning proccess
         $this->startClean($this->xmlDocument->childNodes, $elementsToRemove);
 
@@ -266,19 +262,6 @@ class Sanitizer
         if (\LIBXML_VERSION < 20900) {
             // Reset the entity loader
             libxml_disable_entity_loader($this->xmlLoaderValue);
-        }
-    }
-
-    /**
-     * Remove the XML Doctype
-     * It may be caught later on output but that seems to be buggy, so we need to make sure it's gone
-     */
-    protected function removeDoctype()
-    {
-        foreach ($this->xmlDocument->childNodes as $child) {
-            if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {
-                $child->parentNode->removeChild($child);
-            }
         }
     }
 
@@ -350,7 +333,7 @@ class Sanitizer
                         // get attribute name
                         $attrName = $currentElement->attributes->item( $x )->name;
 
-                        if (in_array($attrName, ['face', 'color', 'size'])) {
+                        if (in_array(strtolower($attrName), ['face', 'color', 'size'])) {
                             $breaksOutOfForeignContent = true;
                         }
                     }
@@ -459,15 +442,15 @@ class Sanitizer
         }
     }
 
-/**
- * Only allow whitelisted starts to be within the href.
- *
- * This will stop scripts etc from being passed through, with or without attempting to hide bypasses.
- * This stops the need for us to use a complicated script regex.
- *
- * @param $value
- * @return bool
- */
+    /**
+     * Only allow whitelisted starts to be within the href.
+     *
+     * This will stop scripts etc from being passed through, with or without attempting to hide bypasses.
+     * This stops the need for us to use a complicated script regex.
+     *
+     * @param $value
+     * @return bool
+     */
     protected function isHrefSafeValue($value) {
 
         // Allow empty values
@@ -503,7 +486,7 @@ class Sanitizer
             'data:image/jpe', // JPEG
             'data:image/pjp', // PJPEG
         ))) {
-           return true;
+            return true;
         }
 
         // Allow known short data URIs.
@@ -656,40 +639,23 @@ class Sanitizer
     }
 
     /**
-     * Determines whether a node is safe or not.
-     *
-     * @param \DOMNode $node
-     * @return bool
-     */
-    protected function isNodeSafe(\DOMNode $node) {
-        $safeNodes = [
-            '#text',
-        ];
-
-        if (!in_array($node->nodeName, $safeNodes, true)) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Remove nodes that are either invalid or malformed.
      *
      * @param \DOMNode $currentElement The current element.
      */
     protected function cleanUnsafeNodes(\DOMNode $currentElement) {
+        // Replace CDATA node with encoded text node
+        if ($currentElement instanceof \DOMCdataSection) {
+            $textNode = $currentElement->ownerDocument->createTextNode($currentElement->nodeValue);
+            $currentElement->parentNode->replaceChild($textNode, $currentElement);
         // If the element doesn't have a tagname, remove it and continue with next iteration
-        if (!property_exists($currentElement, 'tagName')) {
-            if (!$this->isNodeSafe($currentElement)) {
-                $currentElement->parentNode->removeChild($currentElement);
-                $this->xmlIssues[] = array(
-                    'message' => 'Suspicious node \'' . $currentElement->nodeName . '\'',
-                    'line' => $currentElement->getLineNo(),
-                );
-
-                return;
-            }
+        } elseif (!$currentElement instanceof \DOMElement && !$currentElement instanceof \DOMText) {
+            $currentElement->parentNode->removeChild($currentElement);
+            $this->xmlIssues[] = array(
+                'message' => 'Suspicious node \'' . $currentElement->nodeName . '\'',
+                'line' => $currentElement->getLineNo(),
+            );
+            return;
         }
 
         if ( $currentElement->childNodes && $currentElement->childNodes->length > 0 ) {

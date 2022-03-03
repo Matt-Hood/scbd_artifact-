@@ -38,9 +38,9 @@ return array(
     '2f69d3914119f042cca9e44442d5ce95' => $baseDir . '/web/core/includes/bootstrap.inc',
     '6db5533840cb1ae1bc049452845aa88e' => $baseDir . '/web/core/includes/guzzle_php81_shim.php',
     '2cffec82183ee1cea088009cef9a6fc3' => $vendorDir . '/ezyang/htmlpurifier/library/HTMLPurifier.composer.php',
+    '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     'fbeead2280a8f3911a1fe6dd034f7d5e' => $vendorDir . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvancedInterface.php',
     '96f8d8288528d52059397cad6ec61f17' => $vendorDir . '/mkalkbrenner/php-htmldiff-advanced/src/HtmlDiffAdvanced.php',
-    '667aeda72477189d0494fecd327c3641' => $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     '952683d815ff0a7bf322b93c0be7e4e4' => $vendorDir . '/chi-teck/drupal-code-generator/src/bootstrap.php',
     '801c31d8ed748cfa537fa45402288c95' => $vendorDir . '/psy/psysh/src/functions.php',
 );
