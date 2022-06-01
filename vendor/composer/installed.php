@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '18f409c7386b89584ffc7aa8f13c4af679828977',
+        'reference' => '423b6bdc83a59f33747ec68087201f8af55f3bbd',
         'name' => 'mediacurrent/drupal-project',
         'dev' => false,
     ),
@@ -375,6 +375,15 @@
             'replaced' => array(
                 0 => '9.3.6',
             ),
+        ),
+        'drupal/cheeseburger_menu' => array(
+            'pretty_version' => '5.0.0-rc1',
+            'version' => '5.0.0.0-RC1',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/cheeseburger_menu',
+            'aliases' => array(),
+            'reference' => '5.0.0-rc1',
+            'dev_requirement' => false,
         ),
         'drupal/ckeditor' => array(
             'dev_requirement' => false,
@@ -853,6 +862,15 @@
                 0 => '9.3.6',
             ),
         ),
+        'drupal/imce' => array(
+            'pretty_version' => '2.4.0',
+            'version' => '2.4.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/imce',
+            'aliases' => array(),
+            'reference' => '8.x-2.4',
+            'dev_requirement' => false,
+        ),
         'drupal/inline_block_title_automatic' => array(
             'pretty_version' => '1.0.0',
             'version' => '1.0.0.0',
@@ -1302,6 +1320,15 @@
             'reference' => '8.x-3.11',
             'dev_requirement' => false,
         ),
+        'drupal/stage_file_proxy' => array(
+            'pretty_version' => '1.2.0',
+            'version' => '1.2.0.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/stage_file_proxy',
+            'aliases' => array(),
+            'reference' => '8.x-1.2',
+            'dev_requirement' => false,
+        ),
         'drupal/standard' => array(
             'dev_requirement' => false,
             'replaced' => array(
@@ -1330,12 +1357,12 @@
             'dev_requirement' => false,
         ),
         'drupal/svg_image' => array(
-            'pretty_version' => '1.15.0',
-            'version' => '1.15.0.0',
+            'pretty_version' => '1.16.0',
+            'version' => '1.16.0.0',
             'type' => 'drupal-module',
             'install_path' => __DIR__ . '/../../web/modules/contrib/svg_image',
             'aliases' => array(),
-            'reference' => '8.x-1.15',
+            'reference' => '8.x-1.16',
             'dev_requirement' => false,
         ),
         'drupal/syslog' => array(
@@ -1466,6 +1493,15 @@
             'replaced' => array(
                 0 => '9.3.6',
             ),
+        ),
+        'drupal/views_html_tags' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'type' => 'drupal-module',
+            'install_path' => __DIR__ . '/../../web/modules/contrib/views_html_tags',
+            'aliases' => array(),
+            'reference' => '2.0.1',
+            'dev_requirement' => false,
         ),
         'drupal/views_ui' => array(
             'dev_requirement' => false,
@@ -1680,7 +1716,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '18f409c7386b89584ffc7aa8f13c4af679828977',
+            'reference' => '423b6bdc83a59f33747ec68087201f8af55f3bbd',
             'dev_requirement' => false,
         ),
         'mediacurrent/mis_profile' => array(
